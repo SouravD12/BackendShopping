@@ -81,9 +81,24 @@ public class FakeStoreProductService implements ProductService,CategoryService{
     }
 
     @Override
-    public Product updateProduct(Long id, FakeStoreProductDto fakeStoreProductDto) {
-        return null;
+    public Product replaceProduct(Long id, FakeStoreProductDto fakeStoreProductDto) {
+        Product p1 = convert(fakeStoreProductDto);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Product> requestEntity = new HttpEntity<>(p1,httpHeaders);
+        ResponseEntity<Product>responseEntity = restTemplate.exchange(
+                "https://fakestoreapi.com/products/" +id,
+                HttpMethod.PUT,
+                requestEntity,
+                Product.class
+        );
+        return responseEntity.getBody();
     }
+
+//    @Override
+//    public Product partialUpdateProduct(Long id, FakeStoreProductDto fakeStoreProductDto) {
+//        return null;
+//    }
 
 
 //    ---- Category Services ------

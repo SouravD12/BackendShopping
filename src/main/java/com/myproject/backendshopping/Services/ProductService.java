@@ -10,5 +10,6 @@ public interface ProductService {
     Product getSingleProduct(Long id)throws ProductNotFoundException;
     List<Product> getAllProducts();
     Product addNewProduct(FakeStoreProductDto fakeStoreProductDto);
-    Product updateProduct(Long id,FakeStoreProductDto fakeStoreProductDto);
+    Product replaceProduct(Long id,FakeStoreProductDto fakeStoreProductDto);
+//    Product partialUpdateProduct(Long id , FakeStoreProductDto fakeStoreProductDto);
 }

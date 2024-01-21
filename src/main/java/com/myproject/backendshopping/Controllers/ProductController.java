@@ -2,6 +2,7 @@ package com.myproject.backendshopping.Controllers;
 
 
 import com.myproject.backendshopping.Exceptions.ProductNotFoundException;
+import com.myproject.backendshopping.Services.FakeStoreProductService;
 import com.myproject.backendshopping.Services.ProductService;
 import com.myproject.backendshopping.dtos.FakeStoreProductDto;
 import com.myproject.backendshopping.models.Product;
@@ -38,5 +39,10 @@ public class ProductController {
     @PostMapping
     public Product addNewProduct(@RequestBody FakeStoreProductDto fakeStoreProductDto){
         return productService.addNewProduct(fakeStoreProductDto);
+    }
+
+    @PutMapping("/{id}")
+    public Product replacaProduct(@PathVariable("id")Long id, @RequestBody FakeStoreProductDto fakeStoreProductDto){
+        return productService.replaceProduct(id,fakeStoreProductDto);
     }
 }
