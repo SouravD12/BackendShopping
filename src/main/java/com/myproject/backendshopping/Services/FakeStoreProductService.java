@@ -2,6 +2,7 @@ package com.myproject.backendshopping.Services;
 
 import com.myproject.backendshopping.Exceptions.CategoryNotFoundException;
 import com.myproject.backendshopping.Exceptions.ProductNotFoundException;
+import com.myproject.backendshopping.dtos.DeletedProductDto;
 import com.myproject.backendshopping.dtos.FakeStoreProductDto;
 import com.myproject.backendshopping.models.Category;
 import com.myproject.backendshopping.models.Product;
@@ -9,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.HttpMessageConverterExtractor;
 import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
+
 
 @Service
 public class FakeStoreProductService implements ProductService,CategoryService{
@@ -95,10 +98,32 @@ public class FakeStoreProductService implements ProductService,CategoryService{
         return responseEntity.getBody();
     }
 
-//    @Override
-//    public Product partialUpdateProduct(Long id, FakeStoreProductDto fakeStoreProductDto) {
-//        return null;
-//    }
+    @Override
+    public void deleteProduct(Long id) {
+        restTemplate.delete("https://fakestoreapi.com/products/"+id);
+    }
+
+    @Override
+    public Product updateProduct(Long id, Product product) {
+        FakeStoreProductDto fakeStoreProductDto = new FakeStoreProductDto();
+        fakeStoreProductDto.setTitle(product.getTitle());
+        fakeStoreProductDto.setPrice(product.getPrice());
+        fakeStoreProductDto.setDescription(product.getDescription());
+        fakeStoreProductDto.setImage(product.getImageUrl());
+        Category category = product.getCategory();
+        if(category!=null){
+            fakeStoreProductDto.setCategory(category.getName());
+        }
+        RequestCallback requestCallback = restTemplate.httpEntityCallback(fakeStoreProductDto, FakeStoreProductDto.class);
+        HttpMessageConverterExtractor<FakeStoreProductDto> responseExtractor =
+                new HttpMessageConverterExtractor<>(FakeStoreProductDto.class, restTemplate.getMessageConverters());
+        FakeStoreProductDto response = restTemplate.execute("https://fakestoreapi.com/products/"+id,
+                HttpMethod.PATCH,
+                requestCallback,
+                responseExtractor
+                );
+        return convert(response);
+    }
 
 
 //    ---- Category Services ------

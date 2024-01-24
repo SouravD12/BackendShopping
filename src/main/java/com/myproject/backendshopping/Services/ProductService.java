@@ -1,6 +1,7 @@
 package com.myproject.backendshopping.Services;
 
 import com.myproject.backendshopping.Exceptions.ProductNotFoundException;
+import com.myproject.backendshopping.dtos.DeletedProductDto;
 import com.myproject.backendshopping.dtos.FakeStoreProductDto;
 import com.myproject.backendshopping.models.Product;
 
@@ -11,5 +12,6 @@ public interface ProductService {
     List<Product> getAllProducts();
     Product addNewProduct(FakeStoreProductDto fakeStoreProductDto);
     Product replaceProduct(Long id,FakeStoreProductDto fakeStoreProductDto);
-//    Product partialUpdateProduct(Long id , FakeStoreProductDto fakeStoreProductDto);
+    void deleteProduct(Long id);
+    Product updateProduct(Long id , Product product);
 }

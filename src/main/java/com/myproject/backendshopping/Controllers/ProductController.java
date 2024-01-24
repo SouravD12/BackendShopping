@@ -45,4 +45,13 @@ public class ProductController {
     public Product replacaProduct(@PathVariable("id")Long id, @RequestBody FakeStoreProductDto fakeStoreProductDto){
         return productService.replaceProduct(id,fakeStoreProductDto);
     }
+
+    @PatchMapping("/{id}")
+    public Product updateProduct(@PathVariable("id") Long id ,@RequestBody Product product){
+        return productService.updateProduct(id,product);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteProduct(@PathVariable("id")Long id){};
+
 }
