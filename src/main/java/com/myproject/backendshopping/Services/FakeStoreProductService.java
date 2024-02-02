@@ -7,6 +7,7 @@ import com.myproject.backendshopping.dtos.FakeStoreProductDto;
 import com.myproject.backendshopping.models.Category;
 import com.myproject.backendshopping.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.reactive.function.client.WebClientAutoConfiguration;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.HttpMessageConverterExtractor;
 import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.WebClient;
+
 import java.util.*;
 
 
@@ -21,10 +25,13 @@ import java.util.*;
 public class FakeStoreProductService implements ProductService,CategoryService{
 
     private RestTemplate restTemplate;
+    private WebClient.Builder webClientBuilder;
+
 
     @Autowired
-    public FakeStoreProductService(RestTemplate restTemplate){
+    public FakeStoreProductService(RestTemplate restTemplate,WebClient.Builder webClientBuilder){
         this.restTemplate = restTemplate;
+        this.webClientBuilder = webClientBuilder;
     }
 
     private Product convert(FakeStoreProductDto fakeStoreProductDto){
@@ -103,25 +110,15 @@ public class FakeStoreProductService implements ProductService,CategoryService{
     }
 
     @Override
-    public Product updateProduct(Long id, Product product) {
-        FakeStoreProductDto fakeStoreProductDto = new FakeStoreProductDto();
-        fakeStoreProductDto.setTitle(product.getTitle());
-        fakeStoreProductDto.setPrice(product.getPrice());
-        fakeStoreProductDto.setDescription(product.getDescription());
-        fakeStoreProductDto.setImage(product.getImageUrl());
-        Category category = product.getCategory();
-        if(category!=null){
-            fakeStoreProductDto.setCategory(category.getName());
-        }
-        RequestCallback requestCallback = restTemplate.httpEntityCallback(fakeStoreProductDto, FakeStoreProductDto.class);
-        HttpMessageConverterExtractor<FakeStoreProductDto> responseExtractor =
-                new HttpMessageConverterExtractor<>(FakeStoreProductDto.class, restTemplate.getMessageConverters());
-        FakeStoreProductDto response = restTemplate.execute("https://fakestoreapi.com/products/"+id,
-                HttpMethod.PATCH,
-                requestCallback,
-                responseExtractor
-                );
-        return convert(response);
+    public Product updateProduct(Long id, FakeStoreProductDto partialProductDto) {
+        return webClientBuilder.build()
+            .patch()
+            .uri("https://fakestoreapi.com/products/" + id)
+            .body(BodyInserters.fromValue(partialProductDto))
+            .retrieve()
+            .bodyToMono(FakeStoreProductDto.class)
+            .map(this::convert)
+            .block();
     }
 
 
