@@ -1,6 +1,7 @@
 package com.myproject.backendshopping.configurations;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.autoconfigure.web.reactive.function.client.WebClientAutoConfiguration;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -17,4 +18,5 @@ public class ApplicationConfiguration {
     public WebClient.Builder webClientBuilder() {
         return WebClient.builder();
     }
+    private ObjectMapper objectMapper;
 }

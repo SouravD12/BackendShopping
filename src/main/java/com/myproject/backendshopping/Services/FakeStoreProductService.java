@@ -1,5 +1,6 @@
 package com.myproject.backendshopping.Services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myproject.backendshopping.Exceptions.CategoryNotFoundException;
 import com.myproject.backendshopping.Exceptions.ProductNotFoundException;
 import com.myproject.backendshopping.dtos.DeletedProductDto;
@@ -10,12 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.reactive.function.client.WebClientAutoConfiguration;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
+import org.springframework.http.codec.json.Jackson2JsonEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.HttpMessageConverterExtractor;
 import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.*;
@@ -26,12 +29,14 @@ public class FakeStoreProductService implements ProductService,CategoryService{
 
     private RestTemplate restTemplate;
     private WebClient.Builder webClientBuilder;
+    private ObjectMapper objectMapper;
 
 
     @Autowired
-    public FakeStoreProductService(RestTemplate restTemplate,WebClient.Builder webClientBuilder){
+    public FakeStoreProductService(RestTemplate restTemplate,WebClient.Builder webClientBuilder,ObjectMapper objectMapper){
         this.restTemplate = restTemplate;
         this.webClientBuilder = webClientBuilder;
+        this.objectMapper = objectMapper;
     }
 
     private Product convert(FakeStoreProductDto fakeStoreProductDto){
@@ -111,14 +116,19 @@ public class FakeStoreProductService implements ProductService,CategoryService{
 
     @Override
     public Product updateProduct(Long id, FakeStoreProductDto partialProductDto) {
-        return webClientBuilder.build()
-            .patch()
-            .uri("https://fakestoreapi.com/products/" + id)
-            .body(BodyInserters.fromValue(partialProductDto))
-            .retrieve()
-            .bodyToMono(FakeStoreProductDto.class)
-            .map(this::convert)
-            .block();
+        return webClientBuilder.clone()
+                .exchangeStrategies(ExchangeStrategies.builder()
+                        .codecs(configurer -> configurer.defaultCodecs().jackson2JsonEncoder(
+                                new Jackson2JsonEncoder(objectMapper, MediaType.APPLICATION_JSON)))
+                        .build())
+                .build()
+                .patch()
+                .uri("https://fakestoreapi.com/products/" + id)
+                .body(BodyInserters.fromValue(partialProductDto))
+                .retrieve()
+                .bodyToMono(FakeStoreProductDto.class)
+                .map(this::convert)
+                .block();
     }
 
 
