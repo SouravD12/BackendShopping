@@ -24,7 +24,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.*;
 
 
-@Service
+@Service("FakeStoreProductService")
 public class FakeStoreProductService implements ProductService,CategoryService{
 
     private RestTemplate restTemplate;

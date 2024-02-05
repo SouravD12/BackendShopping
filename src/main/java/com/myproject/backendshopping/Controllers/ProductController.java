@@ -7,6 +7,7 @@ import com.myproject.backendshopping.Services.ProductService;
 import com.myproject.backendshopping.dtos.FakeStoreProductDto;
 import com.myproject.backendshopping.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,7 +21,11 @@ public class ProductController {
     private ProductService productService;
 
     @Autowired
-    public ProductController(ProductService productService){
+//    To resolve the problem of two beans who are implementing the same interface
+//    Either use @Qualifier or use @Primary.
+//    For @Qualifier we have to mention the name in the constructor
+//    But for @Primary we just to need to annotate at the top
+    public ProductController(@Qualifier("SelfProductService") ProductService productService){
         this.productService = productService;
     }
 
