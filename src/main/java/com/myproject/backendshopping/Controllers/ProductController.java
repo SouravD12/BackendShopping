@@ -42,8 +42,8 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product addNewProduct(@RequestBody FakeStoreProductDto fakeStoreProductDto){
-        return productService.addNewProduct(fakeStoreProductDto);
+    public Product addNewProduct(@RequestBody Product product){
+        return productService.addNewProduct(product);
     }
 
     @PutMapping("/{id}")

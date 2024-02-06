@@ -2,6 +2,7 @@ package com.myproject.backendshopping.Services;
 
 import com.myproject.backendshopping.Exceptions.ProductNotFoundException;
 import com.myproject.backendshopping.dtos.FakeStoreProductDto;
+import com.myproject.backendshopping.models.Category;
 import com.myproject.backendshopping.models.Product;
 import com.myproject.backendshopping.repositories.CategoryRepository;
 import com.myproject.backendshopping.repositories.ProductRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service("SelfProductService")
 public class SelfProductService implements ProductService{
@@ -23,7 +25,12 @@ public class SelfProductService implements ProductService{
     }
     @Override
     public Product getSingleProduct(Long id) throws ProductNotFoundException {
-        return null;
+        Optional<Product> productOptional = productRepository.findById(1L);
+        if(productOptional.isEmpty()){
+            throw new ProductNotFoundException("Product with this"  +id  +"doesn't exist");
+        }
+        Product product = productOptional.get();
+        return product;
     }
 
     @Override
@@ -32,8 +39,20 @@ public class SelfProductService implements ProductService{
     }
 
     @Override
-    public Product addNewProduct(FakeStoreProductDto fakeStoreProductDto) {
-        return null;
+    public Product addNewProduct(Product product) {
+//        Category category = product.getCategory();
+//        if(category.getId()==null) {
+//            Category savedCategory = categoryRepository.save(category);
+//            product.setCategory(savedCategory);
+//        }
+        Optional<Category>categoryOptional = categoryRepository.findByName(product.getCategory()
+                .getName());
+        if(categoryOptional.isEmpty()){
+            product.setCategory(categoryRepository.save(product.getCategory()));
+        }else{
+            product.setCategory(categoryOptional.get());
+        }
+        return productRepository.save(product);
     }
 
     @Override
@@ -51,3 +70,5 @@ public class SelfProductService implements ProductService{
         return null;
     }
 }
+
+

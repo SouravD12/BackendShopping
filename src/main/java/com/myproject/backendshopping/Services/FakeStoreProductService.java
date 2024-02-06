@@ -77,13 +77,13 @@ public class FakeStoreProductService implements ProductService,CategoryService{
     }
 
     @Override
-    public Product addNewProduct(FakeStoreProductDto fakeStoreProductDto) {
-        Product p1 = convert(fakeStoreProductDto);
+    public Product addNewProduct(Product product) {
+//        Product p1 = convert(fakeStoreProductDto);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<Product> requestEntity = new HttpEntity<>(p1, headers);
+        HttpEntity<Product> requestEntity = new HttpEntity<>(product, headers);
 
         ResponseEntity<Product> responseEntity = restTemplate.exchange(
                 "https://fakestoreapi.com/products",

@@ -10,7 +10,7 @@ import java.util.List;
 public interface ProductService {
     Product getSingleProduct(Long id)throws ProductNotFoundException;
     List<Product> getAllProducts();
-    Product addNewProduct(FakeStoreProductDto fakeStoreProductDto);
+    Product addNewProduct(Product product);
     Product replaceProduct(Long id,FakeStoreProductDto fakeStoreProductDto);
     void deleteProduct(Long id);
     Product updateProduct(Long id , FakeStoreProductDto fakeStoreProductDto);
