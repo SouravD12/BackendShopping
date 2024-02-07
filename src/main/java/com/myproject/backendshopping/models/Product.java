@@ -11,7 +11,7 @@ import lombok.Setter;
 @Entity
 public class Product extends Base {
     private String title;
-    private double price;
+    private Double price;
     @ManyToOne
     private Category category;
     private String description;

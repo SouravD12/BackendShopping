@@ -4,9 +4,11 @@ import com.myproject.backendshopping.dtos.FakeStoreProductDto;
 import com.myproject.backendshopping.models.Category;
 import com.myproject.backendshopping.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -37,6 +39,10 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
 //    EX --> Product save(Product p)
 
     Product save (Product product);
+
+//    Hql Query
+    @Query("select p.description ,p.price  from Product p where p.price >=100000 and p.description like '%Latest%'")
+    List<Object[]> productWithPriceAndDescription();
 
 }
 

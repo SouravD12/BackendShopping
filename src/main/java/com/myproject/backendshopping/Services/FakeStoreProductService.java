@@ -115,7 +115,7 @@ public class FakeStoreProductService implements ProductService,CategoryService{
     }
 
     @Override
-    public Product updateProduct(Long id, FakeStoreProductDto partialProductDto) {
+    public Product updateProduct(Long id, Product product) {
         return webClientBuilder.clone()
                 .exchangeStrategies(ExchangeStrategies.builder()
                         .codecs(configurer -> configurer.defaultCodecs().jackson2JsonEncoder(
@@ -124,7 +124,7 @@ public class FakeStoreProductService implements ProductService,CategoryService{
                 .build()
                 .patch()
                 .uri("https://fakestoreapi.com/products/" + id)
-                .body(BodyInserters.fromValue(partialProductDto))
+                .body(BodyInserters.fromValue(product))
                 .retrieve()
                 .bodyToMono(FakeStoreProductDto.class)
                 .map(this::convert)

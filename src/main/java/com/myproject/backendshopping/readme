@@ -1,0 +1,12 @@
+In case of decalred queries there is a lot of abstraction happening behind the scene
+
+To understand things in a better way , we will be using HQL queries to know what exactly is happening
+behind the scenes with the queries and how are they executing.
+
+HQL ---> Hibernate Query Language
+
+Here we can make changes to the query depending upon our need
+Instead of getting every detail about the product we can select only the fields that we need
+
+For ex --> in the HQL query used in Product Repo i only need description and title from the product
+where the price and description is given by me .
