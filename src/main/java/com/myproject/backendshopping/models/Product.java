@@ -18,4 +18,5 @@ public class Product extends Base {
     private String imageUrl;
 
 
+
 }

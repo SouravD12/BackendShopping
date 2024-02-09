@@ -7,6 +7,8 @@ import com.myproject.backendshopping.dtos.DeletedProductDto;
 import com.myproject.backendshopping.dtos.FakeStoreProductDto;
 import com.myproject.backendshopping.models.Category;
 import com.myproject.backendshopping.models.Product;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.reactive.function.client.WebClientAutoConfiguration;
 import org.springframework.core.ParameterizedTypeReference;
@@ -25,6 +27,8 @@ import java.util.*;
 
 
 @Service("FakeStoreProductService")
+@Getter
+@Setter
 public class FakeStoreProductService implements ProductService,CategoryService{
 
     private RestTemplate restTemplate;
@@ -39,7 +43,7 @@ public class FakeStoreProductService implements ProductService,CategoryService{
         this.objectMapper = objectMapper;
     }
 
-    private Product convert(FakeStoreProductDto fakeStoreProductDto){
+    public Product convert(FakeStoreProductDto fakeStoreProductDto){
         Product product = new Product();
         product.setId(fakeStoreProductDto.getId());
         product.setTitle(fakeStoreProductDto.getTitle());
@@ -95,11 +99,11 @@ public class FakeStoreProductService implements ProductService,CategoryService{
     }
 
     @Override
-    public Product replaceProduct(Long id, FakeStoreProductDto fakeStoreProductDto) {
-        Product p1 = convert(fakeStoreProductDto);
+    public Product replaceProduct(Long id, Product product) {
+//        Product p1 = convert(fakeStoreProductDto);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<Product> requestEntity = new HttpEntity<>(p1,httpHeaders);
+        HttpEntity<Product> requestEntity = new HttpEntity<>(product,httpHeaders);
         ResponseEntity<Product>responseEntity = restTemplate.exchange(
                 "https://fakestoreapi.com/products/" +id,
                 HttpMethod.PUT,
