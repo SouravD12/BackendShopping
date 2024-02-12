@@ -10,3 +10,23 @@ Instead of getting every detail about the product we can select only the fields 
 
 For ex --> in the HQL query used in Product Repo i only need description and title from the product
 where the price and description is given by me .
+
+
+What are Projections and why are they needed??
+
+Suppose we declare an HQL Query , where we want only some particular attributes and not the entire
+Product . So when we will call that particular HQL query in that case , we will create projections with
+Getter , Setters of that particular HQL query , so that it can be called during the execution.
+
+HQL is database independent , maybe we want to move to PostGre from My Sql in that case we don't need
+to worry about the HQL queries , Hibernate will automatically convert the required queries corresponding
+to the DB we are using .
+
+ORM'S biggest issue performance , no exact control over queries
+Most ORM provide a way for you to specify the complete query
+
+In case of native queries , we have to provide the data as it is in the table , and Hibernate
+won't be able to give us auto suggestions
+
+
+@Param annotation is used if we want to provide the parameters from our end .

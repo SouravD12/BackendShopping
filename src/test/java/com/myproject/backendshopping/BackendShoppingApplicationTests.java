@@ -2,13 +2,14 @@ package com.myproject.backendshopping;
 
 import com.myproject.backendshopping.models.Product;
 import com.myproject.backendshopping.repositories.ProductRepository;
+import com.myproject.backendshopping.repositories.projections.ProductWithDescriptionAndPrice;
+import com.myproject.backendshopping.repositories.projections.ProductWithIdTitleAndPrice;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @SpringBootTest
@@ -22,21 +23,26 @@ class BackendShoppingApplicationTests {
     void contextLoads() {
 //        Spring Boot test , application context of springboot is running , or application is starting
     }
+
     @Test
     @Transactional
     @Commit
 //    ERROR ;- no entity manager with transaction level found , added Transactional annotation
 //    To commit the changes
-    void testQueries(){
+    void testQueries() {
 //      productRepository.findByTitleContaining("Sourav");
-      List<Object[]>results = productRepository.productWithPriceAndDescription();
-      for(Object[] result:results){
-          String description = (String)result[0];
-          Double price  =  (Double) result[1];
-          System.out.println("Description " +description+" Price "+price);
-      }
+//      List<ProductWithDescriptionAndPrice>products = productRepository.productWithPriceAndDescription();
+//      for(ProductWithDescriptionAndPrice productWithDescriptionAndPrice:products){
+//          System.out.println(productWithDescriptionAndPrice.getDescription());
+//          System.out.println(productWithDescriptionAndPrice.getPrice());
+//      }
+
+//        For Hql Query
+        List<ProductWithIdTitleAndPrice> product = productRepository.productWithIdTitleAndPrice();
+        for (ProductWithIdTitleAndPrice productWithIdTitleAndPrice : product) {
+            System.out.println(productWithIdTitleAndPrice.getId());
+            System.out.println(productWithIdTitleAndPrice.getTitle());
+            System.out.println(productWithIdTitleAndPrice.getPrice());
+        }
     }
-
-
-
 }

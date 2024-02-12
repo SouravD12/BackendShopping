@@ -77,7 +77,6 @@ public class SelfProductService implements ProductService,CategoryService {
     }
 
     @Override
-    @Transactional
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }

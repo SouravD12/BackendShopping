@@ -1,15 +1,13 @@
 package com.myproject.backendshopping.repositories;
 
-import com.myproject.backendshopping.dtos.FakeStoreProductDto;
-import com.myproject.backendshopping.models.Category;
 import com.myproject.backendshopping.models.Product;
+import com.myproject.backendshopping.repositories.projections.ProductWithDescriptionAndPrice;
+import com.myproject.backendshopping.repositories.projections.ProductWithIdTitleAndPrice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -27,10 +25,17 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
 
 //    Hql Query
     @Query("select p.description ,p.price  from Product p where p.price >=100000 and p.description like '%Latest%'")
-    List<Object[]> productWithPriceAndDescription();
+    List<ProductWithDescriptionAndPrice> productWithPriceAndDescription();
+
+    @Query("select p.id as id ,p.title as title , p.price as price from Product p where id=102")
+    List<ProductWithIdTitleAndPrice> productWithIdTitleAndPrice();
 
     List<Product> findAllByCategoryName(String name);
     void deleteById(Long id);
+
+//    Native Query
+    @Query(value = "select p.title as title , from product p where p.id=202",nativeQuery = true)
+    List<ProductWithIdTitleAndPrice>getProductTitle();
 
 //    Product deleteAllById(Long id);
 
