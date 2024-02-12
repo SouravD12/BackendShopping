@@ -7,9 +7,11 @@ import com.myproject.backendshopping.models.Category;
 import com.myproject.backendshopping.models.Product;
 import com.myproject.backendshopping.repositories.CategoryRepository;
 import com.myproject.backendshopping.repositories.ProductRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.sound.sampled.Port;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +30,7 @@ public class SelfProductService implements ProductService,CategoryService {
 
     @Override
     public Product getSingleProduct(Long id) throws ProductNotFoundException {
-        Optional<Product> productOptional = productRepository.findById(1L);
+        Optional<Product> productOptional = productRepository.findById(id);
         if (productOptional.isEmpty()) {
             throw new ProductNotFoundException("Product id " + id + " doesn't exist");
         }
@@ -61,12 +63,23 @@ public class SelfProductService implements ProductService,CategoryService {
 
     @Override
     public Product replaceProduct(Long id, Product product) {
-        return null;
+        Optional<Product>productOptional = productRepository.findById(id);
+        if(productOptional.isEmpty()){
+            throw new RuntimeException();
+        }
+        Product productInDB = productOptional.get();
+        productInDB.setId(product.getId());
+        productInDB.setTitle(product.getTitle());
+        productInDB.setPrice(product.getPrice());
+        productInDB.setDescription(product.getDescription());
+        productInDB.setImageUrl(product.getImageUrl());
+        return productRepository.save(productInDB);
     }
 
     @Override
+    @Transactional
     public void deleteProduct(Long id) {
-
+        productRepository.deleteById(id);
     }
 
     @Override
@@ -93,7 +106,11 @@ public class SelfProductService implements ProductService,CategoryService {
 
     @Override
     public List<Product> getAllProductsInCategory(String name) throws CategoryNotFoundException {
-        return null;
+        List<Product> products = productRepository.findAllByCategoryName(name);
+        if(products.size()==0){
+            throw new CategoryNotFoundException(name +" category doesn't exist");
+        }
+        return products;
     }
     @Override
     public List<String> getAllCategories() {

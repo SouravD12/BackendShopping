@@ -20,5 +20,5 @@ abstract class Base {
     private Long id;
     private Date createdAt;
     private Date lastUpdatedAt;
-    private boolean isDeleted;
+//    private boolean isDeleted;
 }

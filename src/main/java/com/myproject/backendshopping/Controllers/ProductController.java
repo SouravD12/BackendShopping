@@ -47,7 +47,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public Product replacaProduct(@PathVariable("id")Long id, @RequestBody Product product){
+    public Product replaceProduct(@PathVariable("id")Long id, @RequestBody Product product){
         return productService.replaceProduct(id,product);
     }
 
@@ -57,6 +57,8 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable("id")Long id){};
+    public void deleteProduct(@PathVariable("id")Long id){
+        productService.deleteProduct(id);
+    };
 
 }

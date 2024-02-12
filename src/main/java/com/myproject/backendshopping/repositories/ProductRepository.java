@@ -17,6 +17,8 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
 
     Optional<Product> findById(Long id);
 
+//    Product findById(Long id);
+
 
     Product save (Product product);
 
@@ -26,6 +28,11 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
 //    Hql Query
     @Query("select p.description ,p.price  from Product p where p.price >=100000 and p.description like '%Latest%'")
     List<Object[]> productWithPriceAndDescription();
+
+    List<Product> findAllByCategoryName(String name);
+    void deleteById(Long id);
+
+//    Product deleteAllById(Long id);
 
 }
 
