@@ -30,3 +30,58 @@ won't be able to give us auto suggestions
 
 
 @Param annotation is used if we want to provide the parameters from our end .
+
+
+Representing Cardinalities
+
+When an object of one class has an attribute of another class
+
+
+Foreign Key Constraints --->
+In case we delete a category there are 3 options :-
+* Either delete the product completely from db
+* Either select the product category to Null
+* Either don't allow category deletion
+
+When a class has an attribute of another class , to fetch the details of that attribute it will
+require us to do a join , this can make queries slow
+
+2 possible scenarios
+* We needed the attributes of another class(in the case there is no other alternative)
+* We might not need those products , all the time [More common scenario]
+
+--> There are many time scenarios when we don't really need the details of attributes of another class
+In those scenarios joins is wasteful.
+
+Product <----> Category (Join is compulsory)
+but vice versa is not always needed
+
+
+2 Ways to fetch attributes of child class :-
+i> EAGER FETCH --> Fetch attributes along with fetching the main object
+ii> Lazy Fetch --> Don't fetch the objects of attributes while fetching the main obj , fetch when they are need / if they are needed.
+
+
+when we are calling a service suppose categoryRepository.findAllProductsById()
+In this scenario , only the primitive and the eager annotated attributes will be called , in case we
+want to get the lazy fetch , we will have to explicitly call them .
+
+In Lazy Fetch --> It will lead to a seperate db call and not a join
+
+A join is more efficient than a db call ,  but in case of lazy loading not all the attributes are
+required always .
+
+By default all attributes are eager fetched except collections , which are lazy fetched .
+
+Wherever we are putting the cardinalities we can change the Fetch Type there , we can either make it Lazy or Eager .
+
+Jpa Ignores Fetch Mode
+
+N+1 Problem ---> Sometimes ORM takes M*N+1 iterations to get all the Products from DB rather than taking M+1 iterations
+
+
+Check Orm queries if Optimal or not , otherwise go for Native queries
+
+Fetch Modes were used earlier to solve N+1 issues.
+
+Fetch Type will tell us when to execute query and Fetch Modes tell us how to execute query.

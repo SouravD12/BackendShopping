@@ -1,8 +1,6 @@
 package com.myproject.backendshopping.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,11 +10,8 @@ import lombok.Setter;
 public class Product extends Base {
     private String title;
     private Double price;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY ,cascade = CascadeType.PERSIST) //doesn't support Mapped By.
     private Category category;
     private String description;
     private String imageUrl;
-
-
-
 }

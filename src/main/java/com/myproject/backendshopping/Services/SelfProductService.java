@@ -53,9 +53,10 @@ public class SelfProductService implements ProductService,CategoryService {
 //        }
         Optional<Category> categoryOptional = categoryRepository.findByName(product.getCategory()
                 .getName());
-        if (categoryOptional.isEmpty()) {
-            product.setCategory(categoryRepository.save(product.getCategory()));
-        } else {
+        if(categoryOptional.isEmpty()){
+//            Using cascade persist
+        }
+        else {
             product.setCategory(categoryOptional.get());
         }
         return productRepository.save(product);
