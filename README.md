@@ -1,4 +1,4 @@
-Working on an e-commerce platform using Java and Sprinboot
+Working on an e-commerce platform using Java and Springboot
 
 Developed the models first 
 1> Category Model --> Rather then keeping the model just a String , made it a class for future expansion

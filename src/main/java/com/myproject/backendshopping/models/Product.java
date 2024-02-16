@@ -14,4 +14,5 @@ public class Product extends Base {
     private Category category;
     private String description;
     private String imageUrl;
+    private boolean isDeleted;
 }

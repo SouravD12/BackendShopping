@@ -85,3 +85,23 @@ Check Orm queries if Optimal or not , otherwise go for Native queries
 Fetch Modes were used earlier to solve N+1 issues.
 
 Fetch Type will tell us when to execute query and Fetch Modes tell us how to execute query.
+
+
+Schema Migration :-
+*> We might want more control over data control , table creation etc
+*> People should know the changes that happened in schema
+
+Schema Migration / Versioning libraries ---> Flyway and Liquibase
+
+When using the Flyway migration library , we have to import the flyway core dependency and also the flyway mysql(the db
+that we are using) dependency into our pom.xml
+
+Never edit an already exisiting schema , the previous versions should never be changed.
+Always add a new file to make the changes
+
+In Local we can create multiple migration files , but when we are pushing the code outside
+it is advisable to create a final migration file and push it , in that case we can delete our
+previous locally created migrations .
+
+Suppose we want to enter some data in our My Sql , in that case we can use the Flyway
+Empty Migration .

@@ -27,7 +27,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     @Query("select p.description ,p.price  from Product p where p.price >=100000 and p.description like '%Latest%'")
     List<ProductWithDescriptionAndPrice> productWithPriceAndDescription();
 
-    @Query("select p.id as id ,p.title as title , p.price as price from Product p where id=102")
+    @Query(value = "select p.id as id ,p.title as title , p.price as price from Product p where id=102",nativeQuery = true)
     List<ProductWithIdTitleAndPrice> productWithIdTitleAndPrice();
 
     List<Product> findAllByCategoryName(String name);
