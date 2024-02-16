@@ -1,5 +1,6 @@
 package com.myproject.backendshopping.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,11 +15,9 @@ import java.util.Date;
 @Setter
 @MappedSuperclass
 abstract class Base {
-//    private Long id;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date createdAt;
     private Date lastUpdatedAt;
-
 }

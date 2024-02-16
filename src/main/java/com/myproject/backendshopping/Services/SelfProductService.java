@@ -30,7 +30,7 @@ public class SelfProductService implements ProductService,CategoryService {
 
     @Override
     public Product getSingleProduct(Long id) throws ProductNotFoundException {
-        Optional<Product> productOptional = productRepository.findById(id);
+        Optional<Product> productOptional = productRepository.getProductWithId(id);
         if (productOptional.isEmpty()) {
             throw new ProductNotFoundException("Product id " + id + " doesn't exist");
         }
@@ -46,15 +46,15 @@ public class SelfProductService implements ProductService,CategoryService {
 
     @Override
     public Product addNewProduct(Product product) {
-//        Category category = product.getCategory();
-//        if(category.getId()==null) {
-//            Category savedCategory = categoryRepository.save(category);
-//            product.setCategory(savedCategory);
-//        }
+        Category category = product.getCategory();
+        if(category.getId()==null) {
+            Category savedCategory = categoryRepository.save(category);
+            product.setCategory(savedCategory);
+        }
         Optional<Category> categoryOptional = categoryRepository.findByName(product.getCategory()
                 .getName());
         if(categoryOptional.isEmpty()){
-//            Using cascade persist
+            product.setCategory(categoryRepository.save(product.getCategory()));
         }
         else {
             product.setCategory(categoryOptional.get());
@@ -84,7 +84,7 @@ public class SelfProductService implements ProductService,CategoryService {
 
     @Override
     public Product updateProduct(Long id, Product product) {
-        Optional<Product> productOptional = productRepository.findById(id);
+        Optional<Product> productOptional = productRepository.getProductWithId(id);
         if (productOptional.isEmpty()) {
             throw new RuntimeException();
         }

@@ -1,5 +1,6 @@
 package com.myproject.backendshopping.repositories;
 
+import com.myproject.backendshopping.Services.ProductService;
 import com.myproject.backendshopping.models.Product;
 import com.myproject.backendshopping.repositories.projections.ProductWithDescriptionAndPrice;
 import com.myproject.backendshopping.repositories.projections.ProductWithIdTitleAndPrice;
@@ -14,28 +15,28 @@ import java.util.Optional;
 public interface ProductRepository extends JpaRepository<Product,Long> {
 
     Optional<Product> findById(Long id);
+    @Query(value = "select * from product p where id=:id",nativeQuery = true)
+    Optional<Product> getProductWithId(Long id);
 
 //    Product findById(Long id);
 
 
     Product save (Product product);
 
-    @Query("select p FROM Product p")
+    @Query(value = "select * FROM product p",nativeQuery = true)
     List<Product>getAllProducts();
 
 //    Hql Query
-    @Query("select p.description ,p.price  from Product p where p.price >=100000 and p.description like '%Latest%'")
-    List<ProductWithDescriptionAndPrice> productWithPriceAndDescription();
-
-    @Query(value = "select p.id as id ,p.title as title , p.price as price from Product p where id=102",nativeQuery = true)
-    List<ProductWithIdTitleAndPrice> productWithIdTitleAndPrice();
+//    @Query("select p.description ,p.price  from Product p where p.price >=100000 and p.description like '%Latest%'")
+//    List<ProductWithDescriptionAndPrice> productWithPriceAndDescription();
+//
+//    @Query(value = "select p.id as id ,p.title as title , p.price as price from Product p where id=102",nativeQuery = true)
+//    List<ProductWithIdTitleAndPrice> productWithIdTitleAndPrice();
 
     List<Product> findAllByCategoryName(String name);
     void deleteById(Long id);
 
 //    Native Query
-    @Query(value = "select p.title as title , from product p where p.id=202",nativeQuery = true)
-    List<ProductWithIdTitleAndPrice>getProductTitle();
 
 //    Product deleteAllById(Long id);
 

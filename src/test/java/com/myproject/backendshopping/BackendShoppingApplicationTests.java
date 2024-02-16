@@ -38,11 +38,5 @@ class BackendShoppingApplicationTests {
 //      }
 
 //        For Hql Query
-        List<ProductWithIdTitleAndPrice> product = productRepository.productWithIdTitleAndPrice();
-        for (ProductWithIdTitleAndPrice productWithIdTitleAndPrice : product) {
-            System.out.println(productWithIdTitleAndPrice.getId());
-            System.out.println(productWithIdTitleAndPrice.getTitle());
-            System.out.println(productWithIdTitleAndPrice.getPrice());
-        }
     }
 }

@@ -12,15 +12,7 @@ import java.util.List;
 @Setter
 @Entity
 public class Category extends Base {
-
     private String name;
-//
-    public Category() {
-    }
-
-    public Category(String name) {
-        this.name = name;
-    }
 }
 
 
