@@ -9,6 +9,7 @@ import com.myproject.backendshopping.repositories.CategoryRepository;
 import com.myproject.backendshopping.repositories.ProductRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import javax.sound.sampled.Port;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Primary
 @Service("SelfProductService")
 public class SelfProductService implements ProductService,CategoryService {
 

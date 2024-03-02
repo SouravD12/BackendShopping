@@ -1,0 +1,87 @@
+Test cases should be comprehensive
+
+Figuring out edge cases is necessary
+
+2 types of org
+
+i> Write feature ---> Write Test cases ---> Then submit
+ii> Write test cases ---> Write feature ---> Then Submit (Test Driven Development TDD)
+
+In scenario 2 , test cases will fail as there is no code in the beginning
+
+Wht Tdd:-
+
+Before we even start implementing a feature , take a step back and analyse how our code base is going to get used
+
+
+Flaky Tests :-
+Flaky means unreliable (Sometimes it passes and sometimes it fails)
+
+Concurrency issue might be reason for flakiness , or sometimes using anything random
+
+Adder and subtractor thread issue
+
+Mocking
+
+
+*> Most of my code should get tested one way or other
+*> We want to test our code in isolation
+
+Unit Testing
+--> Every individual unit of code should get tested by one or another test case
+--> Every individual method should get tested by one or another test case
+
+Test coverage --> Percentage of code tested by 1 or other test case
+
+Test coverage should be greater than 80 % (ideal scenario)
+
+A good test case is just i/p and o/p pairs , never put business logic in test cases
+
+Public Services / API need functional tests
+
+Unit testing ---> Testing coding units in isolation
+Integration testing --> Code is still dependent on other code ; Mocking is there but less
+Functional Testing ---> End to end functionalities
+
+Unit Testing >>> Integration Testing >>> Functional test
+
+
+Qualities of Unit Testing :-
+1> Fast Unit Test
+
+  subsections :-
+   i> Arrange --> Create the I/O that we want to test against
+  ii> Act ---> Run what we want to test
+ iii> Assert ---> Check against the current value
+
+ 2> Isolated
+ 3> Repeatable --> Avoid flakiness and should give same o/p always
+ 4> Self Checking (No human intervention to evaluate)
+ 5> Should test a behaviour and not implementation (Also known as Behaviour Driven Development)
+
+ Test cases is written so that we can think from a user's perspective
+
+ Mocking is hardcoding some of the dependencies ; hardcoding some of the method calls to ensure
+ we are testing our codebase in isolation .
+
+ Mocking allows us to hard code some external dependencies to allow our code in isolation
+
+ Test Doubles --> Double is the object/duplicate that will replace the real object
+ Doubles are also of multiple types :-
+ i> Mock --> A double where we just hardcode the return value
+ ii> Stub ---> A class that we create to replicate a behaviour of real class
+ Hacky class to replicate the behaviour of a dependency without calling the real dependency
+ (In case of dynamism we need to create a stub)
+ This is a class that implements the same interface as the dependency
+
+ iii> Fake ---> Basically similar to stub , but when we want to get more complex scenarios we use Fake , it is
+ a more sophisticated and realistic working stub
+
+ Mock < Stub < Fake
+
+ Most scenarios mocks will be enough , stub's and fake's are rare cases
+
+ Interview --> Diff between mock / stub / fake
+
+
+

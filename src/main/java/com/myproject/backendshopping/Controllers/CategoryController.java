@@ -18,7 +18,7 @@ import java.util.List;
 public class CategoryController {
     private CategoryService categoryService;
     @Autowired
-    public CategoryController(@Qualifier("SelfProductService") CategoryService categoryService){
+    public CategoryController( CategoryService categoryService){
         this.categoryService = categoryService;
     }
     @GetMapping("/category/{name}")

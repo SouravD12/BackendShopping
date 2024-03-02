@@ -1,6 +1,7 @@
 package com.myproject.backendshopping.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

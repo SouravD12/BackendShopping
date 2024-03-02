@@ -105,3 +105,16 @@ previous locally created migrations .
 
 Suppose we want to enter some data in our My Sql , in that case we can use the Flyway
 Empty Migration .
+
+
+Subnet is an internet inside an internet
+Nat --> Network Address Translator(allows to create Subnet)
+
+ISP keeps reassigning I/P addresses to be able to accommodate many users with less money
+
+Both static and public I/P are needed to host a website
+
+If public/static i/p address is needed we need to pay ISP extra money
+
+
+

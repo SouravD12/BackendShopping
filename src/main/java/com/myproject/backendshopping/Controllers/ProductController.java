@@ -25,7 +25,7 @@ public class ProductController {
 //    Either use @Qualifier or use @Primary.
 //    For @Qualifier we have to mention the name in the constructor
 //    But for @Primary we just to need to annotate at the top
-    public ProductController(@Qualifier("SelfProductService") ProductService productService){
+    public ProductController(ProductService productService){
         this.productService = productService;
     }
 
@@ -39,6 +39,7 @@ public class ProductController {
     @GetMapping
     public List<Product> getAllProducts(){
         return productService.getAllProducts();
+
     }
 
     @PostMapping
