@@ -1,7 +1,10 @@
 package com.myproject.backendshopping.Controllers;
 
+import com.myproject.backendshopping.Exceptions.ProductNotFoundException;
 import com.myproject.backendshopping.Services.ProductService;
+import com.myproject.backendshopping.Services.SelfProductService;
 import com.myproject.backendshopping.models.Product;
+import com.myproject.backendshopping.repositories.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when; //Framework for Mocking in Java
@@ -20,7 +24,10 @@ class ProductControllerTest {
     private ProductController productController;
 
     @MockBean
-    private ProductService productService;
+    private SelfProductService productService;
+
+    @MockBean
+    private ProductRepository productRepository;
 
     @Test
     void testProductsSameAsService(){
@@ -58,4 +65,16 @@ class ProductControllerTest {
 
 
     }
+
+//    @Test
+//    void testNonExistingProduct(){
+//        when(
+//                productRepository.findById(10L)
+//        ).thenReturn(
+//                Optional.empty()
+//        );
+//        assertThrows(
+//                ProductNotFoundException.class,
+//                ()->productController.getSingleProduct(10L));
+//    }
 }

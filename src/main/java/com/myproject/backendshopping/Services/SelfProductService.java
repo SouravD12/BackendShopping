@@ -121,17 +121,6 @@ public class SelfProductService implements ProductService,CategoryService {
 
 }
 
-//    @Override
-//    public List<Product> getAllProductsInCategory(String categoryName) throws CategoryNotFoundException {
-//        Optional<Product>productOptional = productRepository.getAllProductsInCategory(categoryName);
-//        if(productOptional.isEmpty()){
-//            throw new CategoryNotFoundException(categoryName + " doesn't exist");
-//        }
-////        List<Product>products = productOptional.get();
-//        return null;
-//    }
-//
 
-//}
 
 
