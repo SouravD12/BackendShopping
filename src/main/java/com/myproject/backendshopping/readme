@@ -118,3 +118,13 @@ If public/static i/p address is needed we need to pay ISP extra money
 
 
 
+Why Not Monolith?
+>> Application will have multiple services and everything will be written in one language
+>> All the services will be running in all the servers
+>> Size of application will increase it will make the application slower to run
+
+Microservices --> Breaking one application into multiple smaller applications
+
+Have smaller codebase easier for a developer to understand
+
+OAuth --> Industry wise standard for authorisation

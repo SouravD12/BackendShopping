@@ -4,6 +4,7 @@ package com.myproject.backendshopping.Controllers;
 import com.myproject.backendshopping.Exceptions.ProductNotFoundException;
 import com.myproject.backendshopping.Services.FakeStoreProductService;
 import com.myproject.backendshopping.Services.ProductService;
+import com.myproject.backendshopping.commons.Authenticationcommons;
 import com.myproject.backendshopping.dtos.FakeStoreProductDto;
 import com.myproject.backendshopping.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,21 +13,27 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import java.net.http.HttpResponse;
 import java.util.List;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
     private ProductService productService;
+//    private RestTemplate restTemplate;
+    private Authenticationcommons authenticationcommons;
+
 
     @Autowired
 //    To resolve the problem of two beans who are implementing the same interface
 //    Either use @Qualifier or use @Primary.
 //    For @Qualifier we have to mention the name in the constructor
 //    But for @Primary we just to need to annotate at the top
-    public ProductController(ProductService productService){
+    public ProductController(ProductService productService,Authenticationcommons authenticationcommons){
         this.productService = productService;
+        this.authenticationcommons = authenticationcommons;
     }
 
     @GetMapping("/{id}")
@@ -37,8 +44,11 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> getAllProducts(){
-        return productService.getAllProducts();
+    public ResponseEntity<List<Product>> getAllProducts(@RequestHeader("Authentication")String token){
+        if(authenticationcommons.validateToken(token)==null){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        } // this is how user service is communicating with product service using the token.
+        return new ResponseEntity<>(productService.getAllProducts(),HttpStatus.OK);
 
     }
 
