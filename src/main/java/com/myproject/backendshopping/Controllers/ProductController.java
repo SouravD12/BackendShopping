@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -44,11 +45,20 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts(@RequestHeader("Authentication")String token){
-        if(authenticationcommons.validateToken(token)==null){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        } // this is how user service is communicating with product service using the token.
-        return new ResponseEntity<>(productService.getAllProducts(),HttpStatus.OK);
+    public ResponseEntity<List<Product>> getAllProducts(){
+        List<Product> products = productService.getAllProducts(); // o p q
+
+        List<Product> finalProducts = new ArrayList<>();
+
+        for (Product p: products) { // o  p q
+            p.setTitle(p.getTitle());
+            finalProducts.add(p);
+        }
+
+        ResponseEntity<List<Product>> response = new ResponseEntity<>(
+                finalProducts, HttpStatus.FORBIDDEN
+        );
+        return response;
 
     }
 
