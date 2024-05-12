@@ -17,6 +17,7 @@ CREATE TABLE product
     category_id     BIGINT NULL,
     `description`   VARCHAR(255) NULL,
     image_url       VARCHAR(255) NULL,
+    is_deleted      BIT(1) NOT NULL,
     CONSTRAINT pk_product PRIMARY KEY (id)
 );
 

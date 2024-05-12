@@ -120,6 +120,17 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>7.14.0</version>
+                <configuration>
+                    <url>jdbc:mysql://localhost:3306/mybackendproductdb.c1c2cawosrz8.eu-north-1.rds.amazonaws.com</url>
+                    <user>Sourav</user>
+                    <password>Password_123</password>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 
